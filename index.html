@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Big Bang Theory Interactive Pronouns</title>
+    <title>Subject Pronouns Interactive</title>
     <style>
         body {
             text-align: center;
@@ -19,70 +19,40 @@
             max-width: 800px;
             height: auto;
         }
-        .hotspot {
+        .button {
             position: absolute;
-            width: 80px;
-            height: 80px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #333;
             border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
             cursor: pointer;
-            opacity: 0; /* Скрываем кнопки */
         }
     </style>
 </head>
 <body>
-    <h1>Big Bang Theory Interactive Pronouns</h1>
+    <h1>Subject Pronouns Interactive</h1>
     <div class="container">
-        <img src="image.png" alt="Big Bang Theory Characters" id="background">
-        <div class="hotspot" style="top: 10%; left: 50%;" onclick="playPronoun('sheldon', 'I')"></div>
-        <div class="hotspot" style="top: 20%; left: 70%;" onclick="playPronoun('penny', 'you')"></div>
-        <div class="hotspot" style="top: 30%; left: 40%;" onclick="playPronoun('leonard', 'he')"></div>
-        <div class="hotspot" style="top: 40%; left: 80%;" onclick="playPronoun('howard', 'he')"></div>
-        <div class="hotspot" style="top: 50%; left: 20%;" onclick="playPronoun('raj', 'he')"></div>
-        <div class="hotspot" style="top: 60%; left: 60%;" onclick="playPronoun('bernadette', 'she')"></div>
-        <div class="hotspot" style="top: 70%; left: 30%;" onclick="playPronoun('amy', 'she')"></div>
-        <div class="hotspot" style="top: 80%; left: 50%;" onclick="playPronoun('group', 'we')"></div>
-        <div class="hotspot" style="top: 90%; left: 50%;" onclick="playPronoun('group', 'they')"></div>
+        <img src="image.png" alt="Subject Pronouns" id="background">
+        <div class="button" style="top: 20%; left: 45%;" onclick="playAudio('I')">I</div>
+        <div class="button" style="top: 30%; left: 60%;" onclick="playAudio('You')">You</div>
+        <div class="button" style="top: 40%; left: 50%;" onclick="playAudio('He')">He</div>
+        <div class="button" style="top: 50%; left: 70%;" onclick="playAudio('She')">She</div>
+        <div class="button" style="top: 60%; left: 30%;" onclick="playAudio('They')">They</div>
+        <div class="button" style="top: 70%; left: 50%;" onclick="playAudio('We')">We</div>
     </div>
 
     <audio id="audio"></audio>
 
     <script>
-        function playPronoun(character, pronoun) {
+        function playAudio(pronoun) {
             const audio = document.getElementById('audio');
-            const audioFiles = {
-                sheldon: {
-                    I: 'https://www.example.com/sheldon_I.mp3'
-                },
-                penny: {
-                    you: 'https://www.example.com/penny_you.mp3'
-                },
-                leonard: {
-                    he: 'https://www.example.com/leonard_he.mp3'
-                },
-                howard: {
-                    he: 'https://www.example.com/howard_he.mp3'
-                },
-                raj: {
-                    he: 'https://www.example.com/raj_he.mp3'
-                },
-                bernadette: {
-                    she: 'https://www.example.com/bernadette_she.mp3'
-                },
-                amy: {
-                    she: 'https://www.example.com/amy_she.mp3'
-                },
-                group: {
-                    we: 'https://www.example.com/group_we.mp3',
-                    they: 'https://www.example.com/group_they.mp3'
-                }
-            };
-
-            if (audioFiles[character] && audioFiles[character][pronoun]) {
-                audio.src = audioFiles[character][pronoun];
-                audio.play();
-            } else {
-                console.error('Аудиофайл не найден для', character, pronoun);
-            }
+            audio.src = `https://ssl.gstatic.com/dictionary/static/sounds/20200429/${pronoun.toLowerCase()}--_us_1.mp3`;
+            audio.play();
         }
     </script>
 </body>
