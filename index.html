@@ -72,10 +72,10 @@
                 
                 document.addEventListener('mousemove', onMouseMove);
                 
-                button.onmouseup = function() {
+                button.addEventListener('mouseup', function onMouseUp() {
                     document.removeEventListener('mousemove', onMouseMove);
-                    button.onmouseup = null;
-                };
+                    button.removeEventListener('mouseup', onMouseUp);
+                });
             });
             
             button.ondragstart = function() {
