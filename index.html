@@ -75,6 +75,7 @@
                 function onMouseUp() {
                     document.removeEventListener('mousemove', onMouseMove);
                     document.removeEventListener('mouseup', onMouseUp);
+                    savePositions();
                 }
                 
                 document.addEventListener('mouseup', onMouseUp);
@@ -84,6 +85,31 @@
                 return false;
             };
         });
+
+        function savePositions() {
+            let positions = {};
+            document.querySelectorAll('.button').forEach(button => {
+                positions[button.id] = {
+                    left: button.style.left,
+                    top: button.style.top
+                };
+            });
+            localStorage.setItem('buttonPositions', JSON.stringify(positions));
+        }
+
+        function loadPositions() {
+            let positions = JSON.parse(localStorage.getItem('buttonPositions'));
+            if (positions) {
+                document.querySelectorAll('.button').forEach(button => {
+                    if (positions[button.id]) {
+                        button.style.left = positions[button.id].left;
+                        button.style.top = positions[button.id].top;
+                    }
+                });
+            }
+        }
+
+        window.onload = loadPositions;
     </script>
 </body>
 </html>
