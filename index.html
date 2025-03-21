@@ -30,7 +30,8 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            cursor: pointer;
+            cursor: grab;
+            user-select: none;
         }
     </style>
 </head>
@@ -38,12 +39,12 @@
     <h1>Subject Pronouns Interactive</h1>
     <div class="container">
         <img src="image.png" alt="Subject Pronouns" id="background">
-        <div class="button" style="top: 20%; left: 45%;" onclick="playAudio('I')">I</div>
-        <div class="button" style="top: 30%; left: 60%;" onclick="playAudio('You')">You</div>
-        <div class="button" style="top: 40%; left: 50%;" onclick="playAudio('He')">He</div>
-        <div class="button" style="top: 50%; left: 70%;" onclick="playAudio('She')">She</div>
-        <div class="button" style="top: 60%; left: 30%;" onclick="playAudio('They')">They</div>
-        <div class="button" style="top: 70%; left: 50%;" onclick="playAudio('We')">We</div>
+        <div class="button" style="top: 20%; left: 45%;" draggable="true" ondragstart="drag(event)" id="I">I</div>
+        <div class="button" style="top: 30%; left: 60%;" draggable="true" ondragstart="drag(event)" id="You">You</div>
+        <div class="button" style="top: 40%; left: 50%;" draggable="true" ondragstart="drag(event)" id="He">He</div>
+        <div class="button" style="top: 50%; left: 70%;" draggable="true" ondragstart="drag(event)" id="She">She</div>
+        <div class="button" style="top: 60%; left: 30%;" draggable="true" ondragstart="drag(event)" id="They">They</div>
+        <div class="button" style="top: 70%; left: 50%;" draggable="true" ondragstart="drag(event)" id="We">We</div>
     </div>
 
     <audio id="audio"></audio>
@@ -54,6 +55,23 @@
             audio.src = `https://ssl.gstatic.com/dictionary/static/sounds/20200429/${pronoun.toLowerCase()}--_us_1.mp3`;
             audio.play();
         }
+
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+
+        document.addEventListener("dragover", function(event) {
+            event.preventDefault();
+        });
+
+        document.addEventListener("drop", function(event) {
+            event.preventDefault();
+            const id = event.dataTransfer.getData("text");
+            const button = document.getElementById(id);
+            button.style.position = "absolute";
+            button.style.left = event.clientX - 25 + "px";
+            button.style.top = event.clientY - 25 + "px";
+        });
     </script>
 </body>
 </html>
