@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subject Pronouns Interactive</title>
+    <title>Big Bang Theory Interactive</title>
     <style>
         body {
             text-align: center;
@@ -19,97 +19,49 @@
             max-width: 800px;
             height: auto;
         }
-        .button {
+        .hotspot {
             position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid #333;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            cursor: grab;
-            user-select: none;
+            cursor: pointer;
+            opacity: 0; /* Скрываем кнопки */
         }
     </style>
 </head>
 <body>
-    <h1>Subject Pronouns Interactive</h1>
+    <h1>Big Bang Theory Interactive</h1>
     <div class="container">
-        <img src="image.png" alt="Subject Pronouns" id="background">
-        <div class="button" style="top: 20%; left: 45%;" id="I" onclick="playAudio('I')">I</div>
-        <div class="button" style="top: 30%; left: 60%;" id="You" onclick="playAudio('You')">You</div>
-        <div class="button" style="top: 40%; left: 50%;" id="He" onclick="playAudio('He')">He</div>
-        <div class="button" style="top: 50%; left: 70%;" id="She" onclick="playAudio('She')">She</div>
-        <div class="button" style="top: 60%; left: 30%;" id="They" onclick="playAudio('They')">They</div>
-        <div class="button" style="top: 70%; left: 50%;" id="We" onclick="playAudio('We')">We</div>
+        <img src="image.png" alt="Big Bang Theory Characters" id="background">
+        <div class="hotspot" style="top: 10%; left: 50%;" onclick="playQuote('sheldon')"></div>
+        <div class="hotspot" style="top: 20%; left: 70%;" onclick="playQuote('penny')"></div>
+        <div class="hotspot" style="top: 30%; left: 40%;" onclick="playQuote('leonard')"></div>
+        <div class="hotspot" style="top: 40%; left: 80%;" onclick="playQuote('howard')"></div>
+        <div class="hotspot" style="top: 50%; left: 20%;" onclick="playQuote('raj')"></div>
+        <div class="hotspot" style="top: 60%; left: 60%;" onclick="playQuote('bernadette')"></div>
+        <div class="hotspot" style="top: 70%; left: 30%;" onclick="playQuote('amy')"></div>
     </div>
 
     <audio id="audio"></audio>
 
     <script>
-        function playAudio(pronoun) {
+        function playQuote(character) {
             const audio = document.getElementById('audio');
-            audio.src = `https://ssl.gstatic.com/dictionary/static/sounds/20200429/${pronoun.toLowerCase()}--_us_1.mp3`;
-            audio.play();
-        }
-
-        document.querySelectorAll('.button').forEach(button => {
-            button.addEventListener('mousedown', function(event) {
-                let shiftX = event.clientX - button.getBoundingClientRect().left;
-                let shiftY = event.clientY - button.getBoundingClientRect().top;
-                
-                function moveAt(pageX, pageY) {
-                    button.style.left = pageX - shiftX + 'px';
-                    button.style.top = pageY - shiftY + 'px';
-                }
-                
-                function onMouseMove(event) {
-                    moveAt(event.pageX, event.pageY);
-                }
-                
-                document.addEventListener('mousemove', onMouseMove);
-                
-                function onMouseUp() {
-                    document.removeEventListener('mousemove', onMouseMove);
-                    document.removeEventListener('mouseup', onMouseUp);
-                    savePositions();
-                }
-                
-                document.addEventListener('mouseup', onMouseUp);
-            });
-            
-            button.ondragstart = function() {
-                return false;
+            const quotes = {
+                sheldon: 'https://www.example.com/sheldon_quote.mp3',
+                penny: 'https://www.example.com/penny_quote.mp3',
+                leonard: 'https://www.example.com/leonard_quote.mp3',
+                howard: 'https://www.example.com/howard_quote.mp3',
+                raj: 'https://www.example.com/raj_quote.mp3',
+                bernadette: 'https://www.example.com/bernadette_quote.mp3',
+                amy: 'https://www.example.com/amy_quote.mp3'
             };
-        });
-
-        function savePositions() {
-            let positions = {};
-            document.querySelectorAll('.button').forEach(button => {
-                positions[button.id] = {
-                    left: button.style.left,
-                    top: button.style.top
-                };
-            });
-            localStorage.setItem('buttonPositions', JSON.stringify(positions));
-        }
-
-        function loadPositions() {
-            let positions = JSON.parse(localStorage.getItem('buttonPositions'));
-            if (positions) {
-                document.querySelectorAll('.button').forEach(button => {
-                    if (positions[button.id]) {
-                        button.style.left = positions[button.id].left;
-                        button.style.top = positions[button.id].top;
-                    }
-                });
+            
+            if (quotes[character]) {
+                audio.src = quotes[character];
+                audio.play();
             }
         }
-
-        window.onload = loadPositions;
     </script>
 </body>
 </html>
